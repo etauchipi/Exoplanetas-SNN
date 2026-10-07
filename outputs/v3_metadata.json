@@ -1,0 +1,11 @@
+{
+  "dataset": "kepler_v3",
+  "n_train": 672,
+  "n_val": 48,
+  "n_test": 60,
+  "epochs": 50,
+  "batch_size": 32,
+  "best_threshold": 0.05,
+  "best_f1_val": 0.6779661016949152,
+  "best_auc_val": 0.6684027777777777
+}

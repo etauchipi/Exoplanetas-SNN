@@ -1,0 +1,27 @@
+{
+  "dataset": "kepler_v5",
+  "n_total": 2800,
+  "n_per_class": 1400,
+  "target_length": 1001,
+  "train": 2240,
+  "test": 560,
+  "val": 448,
+  "arquitectura": "FlyInspiredSNN",
+  "params": 16226,
+  "epochs": 30,
+  "lr": 0.0005,
+  "resultados_test": {
+    "auc_roc": 0.5588,
+    "f1_planeta": 0.6667,
+    "threshold": 0.05,
+    "tn": 0,
+    "fp": 280,
+    "fn": 0,
+    "tp": 280
+  },
+  "resultados_val": {
+    "mejor_f1": 0.6514,
+    "mejor_auc": 0.6621
+  },
+  "conclusion": "La SNN no distingue CONFIRMED de Sin KOI usando solo curvas de luz downsampleadas a 1001 puntos. El AUC de 0.56 está cerca del azar. El modelo colapsa a predecir \"planeta\" para todas las muestras de test (TN=0, FP=280). La tarea requiere features adicionales (periodo, duracion, profundidad, centroide, espectroscopia) que son estandar en la literatura de deteccion de exoplanetas."
+}

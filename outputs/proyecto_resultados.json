@@ -1,0 +1,89 @@
+{
+  "proyecto": "Detección de exoplanetas con SNN bioinspirada",
+  "fecha_cierre": "2026-10-05T18:08:47.102067",
+  "experimentos": [
+    {
+      "id": "v1",
+      "dataset": "Kaggle Kepler",
+      "clases": [
+        "CONFIRMED",
+        "FALSE POSITIVE"
+      ],
+      "n_total": 5087,
+      "target_length": 3197,
+      "arquitectura": "FlyInspiredSNN",
+      "params": 189378,
+      "epochs": 50,
+      "auc_test": null,
+      "f1_test": 0.5714,
+      "conclusion": "Baseline. Clase negativa (FP) tiene tránsitos profundos."
+    },
+    {
+      "id": "v3",
+      "dataset": "Kepler real (KOI)",
+      "clases": [
+        "CONFIRMED",
+        "FALSE POSITIVE"
+      ],
+      "n_total": 300,
+      "target_length": 3197,
+      "arquitectura": "FlyInspiredSNN",
+      "params": 47458,
+      "epochs": 50,
+      "auc_test": 0.6539,
+      "f1_test": 0.6842,
+      "conclusion": "Problema de vetting intrínsecamente difícil."
+    },
+    {
+      "id": "v4b",
+      "dataset": "Kepler real",
+      "clases": [
+        "CONFIRMED",
+        "Sin KOI"
+      ],
+      "n_total": 200,
+      "target_length": 1001,
+      "arquitectura": "FlyInspiredSNN",
+      "params": 16226,
+      "epochs": 30,
+      "auc_test": 0.59,
+      "f1_test": 0.6415,
+      "conclusion": "Cambio de clase negativa. Mejora marginal."
+    },
+    {
+      "id": "v5",
+      "dataset": "Kepler real grande",
+      "clases": [
+        "CONFIRMED",
+        "Sin KOI"
+      ],
+      "n_total": 2800,
+      "target_length": 1001,
+      "arquitectura": "FlyInspiredSNN",
+      "params": 16226,
+      "epochs": 30,
+      "auc_test": 0.5588,
+      "f1_test": 0.6667,
+      "conclusion": "Experimento definitivo. El modelo colapsa a predecir \"planeta\" para todas las muestras (TN=0, FP=280). El AUC de 0.56 está cerca del azar. Confirmado: la curva de luz sola no basta."
+    }
+  ],
+  "conclusion_global": "La SNN inspirada en el sistema visual de la mosca NO logra distinguir planetas confirmados de estrellas sin señal usando solo la curva de luz. El problema requiere features adicionales (período, duración, profundidad, centroide, espectroscopía) que son estándar en la literatura astronómica.",
+  "aprendizajes_tecnicos": [
+    "lightkurve + astroquery para acceso a datos de Kepler",
+    "Preprocessing propio que preserva tránsitos (sigma-clipping unilateral)",
+    "Checkpointing incremental para descargas largas",
+    "SNN con Conv1D + LIF en snnTorch",
+    "WeightedRandomSampler para desbalance severo"
+  ],
+  "limitaciones_identificadas": [
+    "Downsampling agresivo destruye tránsitos someros",
+    "Sesgo de selección: CONFIRMED son más ruidosas que Sin KOI",
+    "Falta de features astronómicas adicionales",
+    "SNN no es la arquitectura más adecuada para clasificación de señales débiles"
+  ],
+  "proximos_pasos": [
+    "Probar features engineered + XGBoost",
+    "Migrar a problemas intrínsecamente temporales (fulguraciones solares)",
+    "Explorar SNN para control reactivo (evasión de debris)"
+  ]
+}
